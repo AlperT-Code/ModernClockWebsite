@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman Gizlilik Politikası politikası - Kişisel verilerinizin nasıl korunduğunu ve işlendiğini öğrenin.">
+    <meta name="keywords" content="Gizlilik Politikası politikası, kişisel veriler, KVKK, veri koruma, onlinezaman">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Gizlilik Politikası Politikası</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .privacy-header {
+            text-align: center;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .update-date {
+            font-style: italic;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Privacy Content */
+        .privacy-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .privacy-section {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .privacy-section h2 {
+            color: var(--accent-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .privacy-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .privacy-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .privacy-section ul, .privacy-section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .privacy-section li {
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+        }
+
+        .privacy-section a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .privacy-section a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight-box {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .dark-theme .highlight-box {
+            background-color: rgba(15, 52, 96, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .privacy-header h1 {
+                font-size: 2rem;
+            }
+            
+            .privacy-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .privacy-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="privacy-header">
+            <h1>Gizlilik Politikası Politikası</h1>
+            <p class="update-date"><strong>Son güncellenme:</strong> 29/10/2024</p>
+            <p>Kişisel verilerinizin güvenliği bizim için önemlidir. Bu politika, verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar.</p>
+        </section>
+        
+        <section class="privacy-section">
+            <div class="highlight-box">
+                <p><i class="fas fa-shield-alt"></i> <strong>Önemli:</strong> OnlineZaman olarak, kişisel verilerinizin güvenliğini sağlamak için gerekli teknik ve idari önlemleri alıyoruz. Verileriniz yalnızca bu politikada belirtilen amaçlar doğrultusunda işlenmektedir.</p>
+            </div>
+
+            <h2>Toplanan Kişisel Veriler ve İşleme Yöntemleri</h2>
+            <p>Web sitemizi ziyaret ettiğinizde, aşağıdaki veriler otomatik olarak toplanabilir:</p>
+            <ul>
+                <li><strong>IP adresiniz</strong> ve coğrafi konum bilgileri</li>
+                <li><strong>Tarayıcı türü</strong> ve sürümü gibi teknik bilgiler</li>
+                <li>Ziyaret ettiğiniz sayfalar ve <strong>ziyaret süreleri</strong></li>
+                <li>Referans site bilgileri (varsa)</li>
+                <li><strong>Çerezler (Cookies)</strong> ve benzeri teknolojiler aracılığıyla toplanan veriler</li>
+            </ul>
+            
+            <p>Bu veriler, aşağıdaki yöntemlerle toplanır:</p>
+            <ol>
+                <li>Otomatik olarak (sunucu logları, çerezler vb. yoluyla)</li>
+                <li>Üçüncü taraf analiz araçları (Google Analytics gibi) aracılığıyla</li>
+                <li>Kullanıcı etkileşimleri yoluyla (form doldurma, iletişim talepleri vb.)</li>
+            </ol>
+            
+            <h2>Veri İşleme Amaçları ve Hukuki Dayanaklar</h2>
+            <p>Topladığımız verileri aşağıdaki amaçlarla işliyoruz:</p>
+            
+            <div class="highlight-box">
+                <h3><i class="fas fa-check-circle"></i> Meşru Menfaat</h3>
+                <ul>
+                    <li>Web sitemizin işlevselliğini sağlamak ve geliştirmek</li>
+                    <li>Kullanıcı deneyimini iyileştirmek</li>
+                    <li>Güvenlik önlemlerini uygulamak</li>
+                    <li>Teknik sorunları tespit ve çözmek</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box">
+                <h3><i class="fas fa-check-circle"></i> Yasal Yükümlülük</h3>
+                <ul>
+                    <li>Yasal gereklilikleri yerine getirmek</li>
+                    <li>Resmi makam taleplerine yanıt vermek</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="privacy-section">
+            <h2>Veri Paylaşımı ve Aktarımı</h2>
+            <p>Toplanan veriler, aşağıdaki durumlarda sınırlı olarak paylaşılabilir:</p>
+            
+            <ul>
+                <li><strong>Hizmet Sağlayıcılar:</strong> Web sitemizin işletilmesi ve hizmetlerin sunulması için gerekli olan üçüncü taraf hizmet sağlayıcılarıyla (hosting, analiz vb.)</li>
+                <li><strong>Yasal Zorunluluk:</strong> Yasa, düzenleme, mahkeme kararı veya resmi makam talepleri doğrultusunda</li>
+                <li><strong>İş Ortakları:</strong> Sadece sizinle olan sözleşmemiz çerçevesinde ve gerekli güvenlik önlemleri alınarak</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Önemli:</strong> Kişisel verileriniz, hiçbir koşulda ticari amaçlarla üçüncü taraflara satılmaz veya kiralanmaz.</p>
+            </div>
+            
+            <h2>Veri Güvenliği Önlemleri</h2>
+            <p>Verilerinizin güvenliği için aşağıdaki önlemleri alıyoruz:</p>
+            <ol>
+                <li>Güvenlik duvarları ve şifreleme teknolojileri kullanımı</li>
+                <li>Düzenli güvenlik denetimleri ve güncellemeler</li>
+                <li>Sınırlı erişim politikası (sadece yetkili personel)</li>
+                <li>Veri işleme faaliyetlerinin kayıt altına alınması</li>
+            </ol>
+        </section>
+        
+        <section class="privacy-section">
+            <h2>KVKK Kapsamındaki Haklarınız</h2>
+            <p>Kişisel Verilerin Korunması Kanunu (KVKK) madde 11 uyarınca aşağıdaki haklara sahipsiniz:</p>
+            
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>Bilgi talep hakkı:</strong> Verilerinizin işlenip işlenmediğini öğrenme</li>
+                    <li><strong>Erişim hakkı:</strong> İşlenen verileriniz hakkında bilgi alma</li>
+                    <li><strong>Düzeltme hakkı:</strong> Eksik veya yanlış işlenen verilerin düzeltilmesini isteme</li>
+                    <li><strong>Silme hakkı:</strong> Verilerinizin silinmesini veya yok edilmesini isteme</li>
+                    <li><strong>İtiraz hakkı:</strong> Otomatik sistemlerle analize dayalı işlemlere itiraz etme</li>
+                    <li><strong>Zararın giderilmesi:</strong> Kanuna aykırı işlenen veriler nedeniyle zarara uğramanız halinde tazminat talep etme</li>
+                </ul>
+            </div>
+            
+            <p>Haklarınızı kullanmak için <a href="mailto:alpertasdemir32@gmail.com">alpertasdemir32@gmail.com</a> adresine e-posta gönderebilirsiniz. Talebiniz en geç 30 gün içinde ücretsiz olarak sonuçlandırılacaktır.</p>
+            
+            <h2>Çerez Politikası</h2>
+            <p>Web sitemizde aşağıdaki türde çerezler kullanılmaktadır:</p>
+            <ul>
+                <li><strong>Zorunlu Çerezler:</strong> Sitenin temel işlevlerinin çalışması için gerekli</li>
+                <li><strong>Performans Çerezleri:</strong> Kullanıcı deneyimini analiz etmek ve iyileştirmek için</li>
+                <li><strong>İşlevsel Çerezler:</strong> Tercihlerinizi hatırlamak için (örneğin dil seçimi)</li>
+                <li><strong>Reklam Çerezleri:</strong> İlgi alanlarınıza göre reklam göstermek için</li>
+            </ul>
+            
+            <p>Çerez tercihlerinizi tarayıcı ayarlarınızdan yönetebilirsiniz. Ancak bazı çerezleri devre dışı bırakmanın site işlevselliğini etkileyebileceğini unutmayın.</p>
+        </section>
+        
+        <section class="privacy-section">
+            <h2>Politika Değişiklikleri ve İletişim</h2>
+            <p>Gizlilik Politikası politikamızı zaman zaman güncelleyebiliriz. Değişiklikler yürürlüğe girdiğinde bu sayfada yayınlanacaktır.</p>
+            
+            <div class="highlight-box">
+                <p><i class="fas fa-question-circle"></i> <strong>Sorularınız mı var?</strong> Gizlilik Politikası politikamızla ilgili her türlü soru ve görüşleriniz için <a href="mailto:alpertasdemir32@gmail.com">alpertasdemir32@gmail.com</a> adresinden bizimle iletişime geçebilirsiniz.</p>
+            </div>
+            
+            <p>Bu Gizlilik Politikası politikası, <a href="https://sartlar.com" target="_blank" rel="noopener noreferrer">https://sartlar.com</a> aracılığıyla oluşturulmuştur.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html" class="active">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

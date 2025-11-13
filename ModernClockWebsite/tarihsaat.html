@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - Gelişmiş saat ve tarih uygulaması ile dünya saatlerini takip edin">
+    <meta name="keywords" content="saat, tarih, dünya saatleri, zamanlayıcı, kronometre">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Gelişmiş Saat ve Tarih Uygulaması</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .clock-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .clock-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Main Clock Section */
+        .main-clock-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .main-clock {
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-theme .main-clock {
+            background-color: var(--dark-color);
+        }
+
+        .main-clock::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .main-clock-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-clock-time {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .main-clock-city {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .main-clock-date {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* World Clocks Section */
+        .world-clocks {
+            margin-bottom: 3rem;
+        }
+
+        .world-clocks h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .clock-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .dark-theme .clock-card {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .clock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .clock-card-city {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .clock-card-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .clock-card-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Info Section */
+        .info-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-section {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .info-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .info-section p, .info-section ul, .info-section ol {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .info-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .info-section strong {
+            color: var(--accent-color);
+        }
+
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .fullscreen-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .main-clock-time {
+                font-size: 4rem;
+            }
+            
+            .main-clock-city {
+                font-size: 1.5rem;
+            }
+            
+            .main-clock-date {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .clock-header h1 {
+                font-size: 2rem;
+            }
+            
+            .clocks-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .clock-card {
+                padding: 1rem;
+            }
+            
+            .clock-card-city {
+                font-size: 1rem;
+            }
+            
+            .clock-card-time {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-clock-time {
+                font-size: 3rem;
+            }
+            
+            .main-clock {
+                padding: 1.5rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html" class="active">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html" class="active">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="clock-header">
+            <h1>Dünya Saatleri ve Tarih</h1>
+            <p>Farklı şehirlerdeki saatleri gerçek zamanlı olarak takip edin</p>
+        </section>
+        
+        <div class="main-clock-container">
+            <div class="main-clock">
+                <div class="main-clock-content">
+                    <div class="main-clock-time" id="big-clock-time">00:00:00</div>
+                    <div class="main-clock-city" id="big-clock-city">İstanbul</div>
+                    <div class="main-clock-date" id="big-clock-date">1 Ocak 2023, Pazar</div>
+                </div>
+            </div>
+        </div>
+        
+        <section class="world-clocks">
+            <h2>Dünya Saatleri</h2>
+            <div class="clocks-grid">
+                <div class="clock-card" onclick="showClock('istanbul')">
+                    <div class="clock-card-city">İstanbul</div>
+                    <div class="clock-card-time" id="istanbul-time">00:00:00</div>
+                    <div class="clock-card-date" id="istanbul-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('newYork')">
+                    <div class="clock-card-city">New York</div>
+                    <div class="clock-card-time" id="newYork-time">00:00:00</div>
+                    <div class="clock-card-date" id="newYork-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('london')">
+                    <div class="clock-card-city">Londra</div>
+                    <div class="clock-card-time" id="london-time">00:00:00</div>
+                    <div class="clock-card-date" id="london-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('tokyo')">
+                    <div class="clock-card-city">Tokyo</div>
+                    <div class="clock-card-time" id="tokyo-time">00:00:00</div>
+                    <div class="clock-card-date" id="tokyo-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('paris')">
+                    <div class="clock-card-city">Paris</div>
+                    <div class="clock-card-time" id="paris-time">00:00:00</div>
+                    <div class="clock-card-date" id="paris-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('moscow')">
+                    <div class="clock-card-city">Moskova</div>
+                    <div class="clock-card-time" id="moscow-time">00:00:00</div>
+                    <div class="clock-card-date" id="moscow-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('dubai')">
+                    <div class="clock-card-city">Dubai</div>
+                    <div class="clock-card-time" id="dubai-time">00:00:00</div>
+                    <div class="clock-card-date" id="dubai-date">1 Oca 2023</div>
+                </div>
+                
+                <div class="clock-card" onclick="showClock('beijing')">
+                    <div class="clock-card-city">Pekin</div>
+                    <div class="clock-card-time" id="beijing-time">00:00:00</div>
+                    <div class="clock-card-date" id="beijing-date">1 Oca 2023</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="info-section">
+            <h2>Gündelik Saat ve Tarih Nedir?</h2>
+            <p>Gündelik saat ve tarih, bir gün içerisindeki zamanı ve takvim tarihini gösteren önemli zaman ölçümleridir. Saat, günün saat dilimlerini belirtirken, tarih ise yılı, ayı ve günü ifade eder. Bu bilgiler, günlük yaşamda planlama ve organizasyon için kritik öneme sahiptir.</p>
+        </section>
+        
+        <section class="info-section">
+            <h2>Ne İşe Yarar?</h2>
+            <ol>
+                <li><strong>Zaman Yönetimi:</strong> Gündelik saat, randevuları, toplantıları ve etkinlikleri zamanında planlamak için kullanılır. Böylece günlük aktiviteler daha verimli bir şekilde organize edilebilir.</li>
+                <li><strong>Tarih Belirleme:</strong> Tarih, önemli günlerin, doğum günlerinin veya kutlamaların hatırlanmasında yardımcı olur. Ayrıca, resmi belgelerde ve işlemlerde tarih belirtmek zorunludur.</li>
+                <li><strong>İletişim:</strong> Farklı saat dilimlerinde yaşayan kişilerle iletişim kurarken, saat ve tarih bilgileri, doğru zamanlamayı sağlamak için önemlidir.</li>
+                <li><strong>Takvim Uygulamaları:</strong> Gündelik saat ve tarih bilgileri, takvim uygulamalarında etkinliklerin ve hatırlatıcıların düzenlenmesi için kullanılır.</li>
+            </ol>
+        </section>
+        
+        <section class="info-section">
+            <h2>Nerede Kullanılır?</h2>
+            <ul>
+                <li><strong>Evde:</strong> Günlük aktiviteleri planlamak, yemek saatlerini belirlemek veya televizyon programlarını takip etmek için.</li>
+                <li><strong>Ofiste:</strong> Toplantıların ve iş süreçlerinin zamanlamasında, projelerin planlanmasında.</li>
+                <li><strong>Okullarda:</strong> Ders saatlerini ve sınav tarihlerini takip etmek için.</li>
+                <li><strong>Sosyal Hayatta:</strong> Arkadaşlarla buluşma zamanlarının ayarlanmasında, etkinliklerin düzenlenmesinde.</li>
+            </ul>
+            <p>Gündelik saat ve tarih, bireylerin yaşamlarını düzenlemelerine yardımcı olan temel unsurlardır. Bu sayede, zamanın etkin bir şekilde kullanılması sağlanır ve günlük yaşamda düzen oluşturulur.</p>
+        </section>
+        
+        <button class="fullscreen-btn" id="fullscreen-btn" title="Tam ekran">
+            <i class="fas fa-expand"></i>
+        </button>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Saat ve tarih fonksiyonları
+        const timeZones = {
+            istanbul: 'Europe/Istanbul',
+            newYork: 'America/New_York',
+            london: 'Europe/London',
+            tokyo: 'Asia/Tokyo',
+            paris: 'Europe/Paris',
+            moscow: 'Europe/Moscow',
+            dubai: 'Asia/Dubai',
+            beijing: 'Asia/Shanghai'
+        };
+
+        const turkishMonths = [
+            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        ];
+
+        const turkishDays = [
+            "Pazar", "Pazartesi", "Salı", "Çarşamba", 
+            "Perşembe", "Cuma", "Cumartesi"
+        ];
+
+        let currentCity = 'istanbul';
+
+        function updateClocks() {
+            for (const city in timeZones) {
+                const now = new Date();
+                const options = { 
+                    timeZone: timeZones[city],
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                };
+                
+                const timeStr = now.toLocaleTimeString('tr-TR', options);
+                document.getElementById(`${city}-time`).textContent = timeStr;
+                
+                // Tarih bilgisini güncelle
+                const dateOptions = { 
+                    timeZone: timeZones[city],
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                };
+                
+                const dateStr = now.toLocaleDateString('tr-TR', dateOptions);
+                document.getElementById(`${city}-date`).textContent = dateStr;
+            }
+            
+            updateBigClock();
+        }
+
+        function showClock(city) {
+            currentCity = city;
+            updateBigClock();
+            
+            // Seçilen şehri vurgula
+            document.querySelectorAll('.clock-card').forEach(card => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            });
+            
+            event.currentTarget.style.transform = 'translateY(-5px)';
+            event.currentTarget.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+        }
+
+        function updateBigClock() {
+            const now = new Date();
+            const options = { 
+                timeZone: timeZones[currentCity],
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            
+            const timeStr = now.toLocaleTimeString('tr-TR', options);
+            document.getElementById('big-clock-time').textContent = timeStr;
+            
+            // Şehir adını güncelle (baş harfi büyük)
+            const cityName = currentCity.charAt(0).toUpperCase() + currentCity.slice(1);
+            document.getElementById('big-clock-city').textContent = cityName;
+            
+            // Tarih bilgisini güncelle (Türkçe format)
+            const day = now.getDate();
+            const month = turkishMonths[now.getMonth()];
+            const year = now.getFullYear();
+            const dayName = turkishDays[now.getDay()];
+            
+            const dateStr = `${day} ${month} ${year}, ${dayName}`;
+            document.getElementById('big-clock-date').textContent = dateStr;
+        }
+
+        // Sayfa yüklendiğinde saatleri güncelle ve her saniye yenile
+        window.onload = function() {
+            updateClocks();
+            setInterval(updateClocks, 1000);
+            
+            // Varsayılan olarak İstanbul saati gösterilsin
+            showClock('istanbul');
+        };
+
+        // Tam ekran butonu
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const mainClock = document.querySelector('.main-clock');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (mainClock.requestFullscreen) {
+                mainClock.requestFullscreen();
+            } else if (mainClock.webkitRequestFullscreen) { // Safari
+                mainClock.webkitRequestFullscreen();
+            } else if (mainClock.msRequestFullscreen) { // IE11
+                mainClock.msRequestFullscreen();
+            }
+        });
+    </script>
+</body>
+
+</html>

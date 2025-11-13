@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - Gelişmiş hesap makinesi ile temel ve bilimsel hesaplamalarınızı kolayca yapın">
+    <meta name="keywords" content="hesap makinesi, bilimsel hesap makinesi, online hesap makinesi, matematik hesaplamaları">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Gelişmiş Hesap Makinesi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+   
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        
+        .calculator-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .calculator {
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            width: 320px;
+            height: 650px;
+        }
+
+        .dark-theme .calculator {
+            background-color: var(--dark-color);
+        }
+
+        .calculator-display {
+            width: 100%;
+            height: 70px;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1.8rem;
+            text-align: right;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+
+        .dark-theme .calculator-display {
+            background-color: #2c3e50;
+            color: var(--text-light);
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+
+        .calculator-btn {
+            height: 60px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calculator-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .number-btn {
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+
+        .operator-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .function-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .clear-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .equals-btn {
+            background-color: #2ecc71;
+            color: white;
+            grid-column: span 2;
+        }
+
+        
+        .calculator-info {
+            max-width: 500px;
+        }
+
+        .info-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-section {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .info-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .info-section p, .info-section ul, .info-section ol {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .calculator-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .calculator-info {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .calculator-header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator {
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            .calculator-btn {
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-buttons {
+                gap: 0.5rem;
+            }
+            
+            .calculator-btn {
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html" class="active">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <section class="calculator-header">
+            <h1>Gelişmiş Hesap Makinesi</h1>
+            <p>Temel ve bilimsel hesaplamalarınız için güçlü araç</p>
+        </section>
+        
+        <div class="calculator-container">
+            <div class="calculator">
+                <input type="text" class="calculator-display" id="display" disabled>
+                
+                <div class="calculator-buttons">
+                    <button class="calculator-btn clear-btn" onclick="clearDisplay()">C</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.sqrt(')">√</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('**2')">x²</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('**3')">x³</button>
+                    
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.sin(')">sin</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.cos(')">cos</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.tan(')">tan</button>
+                    <button class="calculator-btn operator-btn" onclick="appendToDisplay('/')">/</button>
+                    
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('7')">7</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('8')">8</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('9')">9</button>
+                    <button class="calculator-btn operator-btn" onclick="appendToDisplay('*')">×</button>
+                    
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('4')">4</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('5')">5</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('6')">6</button>
+                    <button class="calculator-btn operator-btn" onclick="appendToDisplay('-')">-</button>
+                    
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('1')">1</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('2')">2</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('3')">3</button>
+                    <button class="calculator-btn operator-btn" onclick="appendToDisplay('+')">+</button>
+                    
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('0')">0</button>
+                    <button class="calculator-btn number-btn" onclick="appendToDisplay('.')">.</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.factorial(')">n!</button>
+                    <button class="calculator-btn function-btn" onclick="appendToDisplay('Math.log(')">log</button>
+                    
+                    <button class="calculator-btn equals-btn" onclick="calculateResult()">=</button>
+                </div>
+            </div>
+            
+            <div class="calculator-info">
+                <section class="info-section">
+                    <h2>Hesap Makinesi Nedir?</h2>
+                    <p>Hesap makinesi, matematiksel işlemleri hızlı ve doğru bir şekilde gerçekleştiren bir araçtır. Temel aritmetik işlemlerden karmaşık bilimsel hesaplamalara kadar geniş bir yelpazede kullanılabilir.</p>
+                    <p>OnlineZaman hesap makinesi, hem günlük ihtiyaçlarınız hem de daha karmaşık matematiksel hesaplamalar için tasarlanmıştır.</p>
+                </section>
+                
+                <section class="info-section">
+                    <h2>Özellikler ve Kullanım Alanları</h2>
+                    <ul>
+                        <li><strong>Temel İşlemler:</strong> Toplama, çıkarma, çarpma, bölme</li>
+                        <li><strong>Bilimsel Fonksiyonlar:</strong> Trigonometri (sin, cos, tan), logaritma, karekök</li>
+                        <li><strong>Üs Alma:</strong> Kare (x²), küp (x³) ve diğer üs hesaplamaları</li>
+                        <li><strong>Faktöriyel Hesaplama:</strong> Kombinasyon ve permütasyon problemleri için</li>
+                    </ul>
+                </section>
+                
+                <section class="info-section">
+                    <h2>Kullanım Kılavuzu</h2>
+                    <ol>
+                        <li>Temel işlemler için sayıları ve operatörleri girin</li>
+                        <li>Fonksiyonlar için önce fonksiyon butonuna basın, ardından değeri girin</li>
+                        <li>Üs hesaplamaları için sayıyı girdikten sonra x² veya x³ butonlarını kullanın</li>
+                        <li>Hesaplamayı tamamlamak için "=" butonuna basın</li>
+                        <li>Ekranı temizlemek için "C" butonunu kullanın</li>
+                    </ol>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+    
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+     
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+       
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+
+        Math.factorial = function(n) {
+            if (n < 0) return undefined; 
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        };
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            
+          
+            if (value === '**2') {
+                display.value += '**2';
+            } else if (value === '**3') {
+                display.value += '**3';
+            } else {
+                display.value += value;
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+       
+                let expression = display.value;
+                
+         
+                if (expression.includes('Math.sqrt(')) {
+                    expression = expression.replace(/Math.sqrt\(([^)]+)\)/g, function(match, group) {
+                        return `Math.sqrt(${group})`;
+                    });
+                }
+                
+
+                if (expression.includes('Math.sin(') || expression.includes('Math.cos(') || expression.includes('Math.tan(')) {
+                    expression = expression.replace(/Math.sin\(([^)]+)\)/g, function(match, group) {
+                        return `Math.sin(${group} * Math.PI / 180)`;
+                    });
+                    expression = expression.replace(/Math.cos\(([^)]+)\)/g, function(match, group) {
+                        return `Math.cos(${group} * Math.PI / 180)`;
+                    });
+                    expression = expression.replace(/Math.tan\(([^)]+)\)/g, function(match, group) {
+                        return `Math.tan(${group} * Math.PI / 180)`;
+                    });
+                }
+                
+                if (expression.includes('Math.factorial(')) {
+                    expression = expression.replace(/Math.factorial\(([^)]+)\)/g, function(match, group) {
+                        return `Math.factorial(${group})`;
+                    });
+                }
+         
+                if (expression.includes('Math.log(')) {
+                    expression = expression.replace(/Math.log\(([^)]+)\)/g, function(match, group) {
+                        return `Math.log10(${group})`;
+                    });
+                }
+    
+                const result = eval(expression);
+                
+              
+                if (isNaN(result) || !isFinite(result)) {
+                    display.value = 'Hata';
+                } else {
+                    display.value = result;
+                }
+            } catch (e) {
+                display.value = 'Hata';
+            }
+        }
+    </script>
+</body>
+
+</html>

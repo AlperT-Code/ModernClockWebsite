@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - LGS Sayaç ile sınav tarihine kalan süreyi takip edin. 1 Haziran Pazar günü gerçekleşecek LGS için geri sayım.">
+    <meta name="keywords" content="LGS sayaç, LGS geri sayım, LGS 2025, Liselere Geçiş Sınavı, sınav hazırlık">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - LGS Sayaç</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .exam-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .exam-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .exam-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .dark-theme .exam-info {
+            background-color: var(--dark-color);
+        }
+
+        .exam-info h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .exam-details {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .exam-detail {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        /* Countdown Styles */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .countdown-card {
+            width: 160px;
+            height: 180px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
+        }
+
+        .countdown-value {
+            font-size: 4rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            position: absolute;
+            bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 3rem;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-card {
+            background-color: var(--dark-color);
+        }
+
+        .info-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card p {
+            margin-bottom: 1rem;
+        }
+
+        .info-card ul, .info-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .dark-theme .highlight-box {
+            background-color: rgba(15, 52, 96, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .exam-header h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-card {
+                width: 120px;
+                height: 140px;
+            }
+            
+            .countdown-value {
+                font-size: 3rem;
+            }
+            
+            .countdown-label {
+                font-size: 1rem;
+            }
+            
+            .exam-details {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown-container {
+                gap: 1rem;
+            }
+            
+            .countdown-card {
+                width: 80px;
+                height: 100px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+                bottom: 0.5rem;
+            }
+            
+            .exam-info h2 {
+                font-size: 1.5rem;
+            }
+            
+            .exam-detail {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html" class="active">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="exam-header">
+            <h1>LGS Sayaç</h1>
+            <p>Liselere Geçiş Sınavı'na kalan süreyi takip edin</p>
+        </section>
+        
+        <section class="exam-info">
+            <h2>LGS 2025</h2>
+            <p>1 Haziran Pazar günü gerçekleşecek Liselere Geçiş Sınavı için geri sayım</p>
+            
+            <div class="exam-details">
+                <span class="exam-detail"><i class="fas fa-clock"></i> 09:30 - 1. Oturum</span>
+                <span class="exam-detail"><i class="fas fa-clock"></i> 11:30 - 2. Oturum</span>
+                <span class="exam-detail"><i class="fas fa-stopwatch"></i> 180 Dakika</span>
+                <span class="exam-detail"><i class="fas fa-question-circle"></i> 90 Soru</span>
+            </div>
+        </section>
+        
+        <div class="countdown-container">
+            <div class="countdown-card">
+                <div class="countdown-value" id="days">0</div>
+                <div class="countdown-label">Gün</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="hours">0</div>
+                <div class="countdown-label">Saat</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="minutes">0</div>
+                <div class="countdown-label">Dakika</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="seconds">0</div>
+                <div class="countdown-label">Saniye</div>
+            </div>
+        </div>
+        
+        <section class="info-section">
+            <h2>LGS Hakkında Bilmeniz Gerekenler</h2>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-question-circle"></i> LGS Nedir?</h3>
+                <p>LGS (Liselere Geçiş Sınavı), Türkiye'de ortaöğretime geçişte kullanılan sınav sistemidir. LGS, öğrencilerin ortaöğretim kurumlarına yerleşimlerinde bilgi seviyelerini ve başarılarını değerlendirir.</p>
+                
+                <div class="highlight-box">
+                    <p><i class="fas fa-info-circle"></i> <strong>Önemli:</strong> LGS, öğrencilerin akademik başarılarını standart bir yöntemle ölçüp değerlendirir ve eğitim kurumları bu sonuçlara göre eğitim programlarını geliştirir.</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-check-circle"></i> LGS'nin Önemi</h3>
+                <ol>
+                    <li><strong>Lise Yerleştirme:</strong> Öğrencilerin tercih ettikleri liselere yerleşimini belirler.</li>
+                    <li><strong>Kariyer Planlama:</strong> Öğrencilerin gelecekteki eğitim ve kariyer hedeflerine yönelmesini sağlar.</li>
+                    <li><strong>Akademik Değerlendirme:</strong> Öğrencilerin akademik başarılarını ölçer.</li>
+                    <li><strong>Eğitim Kalitesi:</strong> Okulların eğitim programlarını geliştirmesine yardımcı olur.</li>
+                </ol>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-stopwatch"></i> LGS Sayaçının Faydaları</h3>
+                <ul>
+                    <li><strong>Hazırlık Planlaması:</strong> Sınav hazırlıklarını daha etkili planlamanızı sağlar.</li>
+                    <li><strong>Motivasyon Artışı:</strong> Sınav tarihine olan yaklaşım, motivasyonunuzu artırır.</li>
+                    <li><strong>Hatırlatıcı:</strong> Sınav tarihini unutmamanızı sağlar.</li>
+                    <li><strong>Stres Yönetimi:</strong> Zaman yönetimi becerilerinizi geliştirmenize yardımcı olur.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Geri sayım fonksiyonu
+        function countdown(targetDate) {
+            const targetTime = new Date(targetDate).getTime();
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+                
+                if (distance < 0) {
+                    document.querySelector(".countdown-container").innerHTML = `
+                        <div style="text-align: center; width: 100%;">
+                            <h2 style="color: var(--accent-color);">LGS Sınavı Başladı!</h2>
+                            <p>Başarılar dileriz!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                updateNumber("days", days);
+                updateNumber("hours", hours);
+                updateNumber("minutes", minutes);
+                updateNumber("seconds", seconds);
+            }
+            
+            // Hemen güncelle
+            updateCountdown();
+            
+            // Her saniye güncelle
+            setInterval(updateCountdown, 1000);
+        }
+        
+        function updateNumber(id, newValue) {
+            const element = document.getElementById(id);
+            const currentValue = parseInt(element.textContent);
+            
+            if (currentValue !== newValue) {
+                // Animasyon ekle
+                element.style.transform = "translateY(-10px)";
+                element.style.opacity = "0";
+                
+                setTimeout(() => {
+                    element.textContent = newValue;
+                    element.style.transform = "translateY(0)";
+                    element.style.opacity = "1";
+                }, 300);
+            }
+        }
+        
+        // LGS 2025 tarihi: 1 Haziran Pazar
+        countdown('2025-06-01T09:30:00');
+    </script>
+</body>
+
+</html>

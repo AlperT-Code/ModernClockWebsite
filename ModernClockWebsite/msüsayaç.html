@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MSÜ 2025 geri sayım sayacı - Milli Savunma Üniversitesi sınavına kalan süreyi takip edin">
+    <meta name="keywords" content="MSÜ, MSÜ 2025, MSÜ sayacı, Milli Savunma Üniversitesi, askeri sınav, geri sayım">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - MSÜ 2025 Geri Sayım</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .exam-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .exam-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .exam-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .exam-info-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Countdown Styles */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-card {
+            width: 150px;
+            height: 180px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
+        }
+
+        .countdown-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            transition: opacity 0.5s ease;
+        }
+
+        .countdown-number.fade-out {
+            opacity: 0;
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .content-section {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .content-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ol, .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .exam-header h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-card {
+                width: 120px;
+                height: 150px;
+            }
+            
+            .countdown-number {
+                font-size: 2.8rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .countdown-container {
+                gap: 1rem;
+            }
+            
+            .countdown-card {
+                width: 100px;
+                height: 130px;
+            }
+            
+            .countdown-number {
+                font-size: 2.2rem;
+            }
+            
+            .countdown-label {
+                font-size: 1rem;
+            }
+            
+            .exam-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            
+            .exam-info-item {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html" class="active">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="exam-header">
+            <h1>MSÜ 2025 Geri Sayım</h1>
+            <p>Milli Savunma Üniversitesi sınavına kalan süreyi takip edin, hazırlıklarınızı planlayın</p>
+            
+            <div class="exam-info">
+                <div class="exam-info-item">
+                    <i class="fas fa-calendar-alt"></i> 3 Mart 2025 Pazartesi
+                </div>
+                <div class="exam-info-item">
+                    <i class="fas fa-clock"></i> 10:15
+                </div>
+                <div class="exam-info-item">
+                    <i class="fas fa-stopwatch"></i> 165 Dakika
+                </div>
+                <div class="exam-info-item">
+                    <i class="fas fa-question-circle"></i> 120 Soru
+                </div>
+            </div>
+        </section>
+        
+        <div class="countdown-container">
+            <div class="countdown-card">
+                <div class="countdown-number" id="days">0</div>
+                <div class="countdown-label">Gün</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-number" id="hours">0</div>
+                <div class="countdown-label">Saat</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-number" id="minutes">0</div>
+                <div class="countdown-label">Dakika</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-number" id="seconds">0</div>
+                <div class="countdown-label">Saniye</div>
+            </div>
+        </div>
+        
+        <section class="content-section">
+            <h2>MSÜ Sınavı Nedir?</h2>
+            <p>Milli Savunma Üniversitesi (MSÜ) sınavı, Türk Silahlı Kuvvetleri'nin subay ihtiyacını karşılamak amacıyla yapılan bir sınavdır. Bu sınav, Kara, Deniz ve Hava Harp Okulları ile Bando Astsubay Hazırlama Okulu'na öğrenci alımında kullanılır.</p>
+            
+            <h2>Sınav İçeriği</h2>
+            <ul>
+                <li><strong>Türkçe:</strong> 40 soru</li>
+                <li><strong>Sosyal Bilimler:</strong> 20 soru (Tarih, Coğrafya, Felsefe, Din Kültürü)</li>
+                <li><strong>Temel Matematik:</strong> 40 soru</li>
+                <li><strong>Fen Bilimleri:</strong> 20 soru (Fizik, Kimya, Biyoloji)</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><i class="fas fa-info-circle"></i> <strong>Önemli:</strong> MSÜ sınavına başvuru yapabilmek için belirli yaş, boy, kilo ve sağlık şartlarını taşımanız gerekmektedir.</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>MSÜ Sayacının Faydaları</h2>
+            <p>MSÜ geri sayım sayacı, sınav hazırlık sürecinizi daha verimli yönetmenize yardımcı olur:</p>
+            
+            <h3>Ne İşe Yarar?</h3>
+            <ol>
+                <li><strong>Zaman Yönetimi:</strong> Kalan süreyi görsel olarak takip ederek çalışma planınızı optimize edebilirsiniz.</li>
+                <li><strong>Motivasyon Artışı:</strong> Sürenin azaldığını görmek çalışma disiplininizi artırır.</li>
+                <li><strong>Stres Kontrolü:</strong> Belirsizlikten kaynaklanan stresi azaltır, planlı çalışmaya teşvik eder.</li>
+                <li><strong>Hedef Odaklılık:</strong> Somut bir bitiş noktası görmek hedeflerinize odaklanmanızı kolaylaştırır.</li>
+            </ol>
+            
+            <h3>Etkili Kullanım Önerileri</h3>
+            <ul>
+                <li>Geri sayımı düzenli olarak takip edin ve çalışma programınızı buna göre güncelleyin</li>
+                <li>Her hafta kalan süreyi değerlendirerek ilerlemenizi ölçün</li>
+                <li>Önemli tarihleri (deneme sınavları, konu tekrarları) geri sayıma göre planlayın</li>
+                <li>Motivasyonunuz düştüğünde geri sayıma bakarak kendinizi toparlayın</li>
+            </ul>
+            
+            <div class="motivation-quote">
+                <p><i class="fas fa-quote-left"></i> Zafer, "zafer benimdir" diyebilenindir. <i class="fas fa-quote-right"></i> - Mustafa Kemal Atatürk</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Geri sayım fonksiyonu
+        function countdown(targetDate) {
+            const targetTime = new Date(targetDate).getTime();
+            
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+
+                if (distance < 0) {
+                    document.querySelector(".countdown-container").innerHTML = 
+                        '<div class="exam-info-item" style="font-size: 1.5rem;">Sınav Zamanı Geldi! Başarılar!</div>';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                updateNumber("days", days);
+                updateNumber("hours", hours);
+                updateNumber("minutes", minutes);
+                updateNumber("seconds", seconds);
+            };
+            
+            // Hemen güncelle ve sonra her saniye tekrarla
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        function updateNumber(id, newValue) {
+            const element = document.getElementById(id);
+            const formattedValue = newValue < 10 ? `0${newValue}` : newValue;
+
+            if (element.textContent != formattedValue) {
+                element.classList.add("fade-out");
+                
+                setTimeout(() => {
+                    element.textContent = formattedValue;
+                    element.classList.remove("fade-out");
+                }, 400);
+            }
+        }
+
+        // 3 Mart 2025, 10:15 (TSI)
+        countdown('2025-03-03T10:15:00+03:00');
+    </script>
+</body>
+
+</html>

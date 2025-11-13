@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - Profesyonel kronometre uygulaması ile zamanı hassas şekilde ölçün. Tur kaydı, tam ekran modu ve karanlık tema desteği.">
+    <meta name="keywords" content="kronometre, zaman ölçer, stopwatch, tur kaydı, zamanlayıcı">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Profesyonel Kronometre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .stopwatch-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .stopwatch-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stopwatch-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .stopwatch-display {
+            font-size: 5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            background-color: var(--dark-color);
+            color: var(--accent-color);
+            padding: 1.5rem 3rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .dark-theme .stopwatch-display {
+            background-color: var(--primary-color);
+        }
+
+        .stopwatch-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .laps-container {
+            width: 100%;
+            max-width: 600px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+        }
+
+        .dark-theme .laps-container {
+            background-color: var(--dark-color);
+        }
+
+        .laps-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-theme .lap-item {
+            border-bottom: 1px solid #444;
+        }
+
+        .lap-item:last-child {
+            border-bottom: none;
+        }
+
+        .lap-number {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 3rem;
+            padding: 2rem 0;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-card {
+            background-color: var(--dark-color);
+        }
+
+        .info-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            margin-bottom: 1rem;
+        }
+
+        .info-card ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stopwatch-header h1 {
+                font-size: 2rem;
+            }
+            
+            .stopwatch-display {
+                font-size: 3.5rem;
+                padding: 1rem 2rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stopwatch-display {
+                font-size: 2.5rem;
+                padding: 1rem;
+            }
+            
+            .stopwatch-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html" class="active">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html" class="active">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="stopwatch-container">
+            <div class="stopwatch-header">
+                <h1>Profesyonel Kronometre</h1>
+                <p>Zamanı hassas şekilde ölçün, turları kaydedin ve performansınızı analiz edin</p>
+            </div>
+            
+            <div class="stopwatch-display" id="stopwatch">
+                00:00:00.0
+            </div>
+            
+            <div class="stopwatch-controls">
+                <button class="btn btn-primary" id="startBtn">
+                    <i class="fas fa-play"></i> Başlat
+                </button>
+                <button class="btn btn-secondary" id="pauseBtn" disabled>
+                    <i class="fas fa-pause"></i> Durdur
+                </button>
+                <button class="btn btn-danger" id="resetBtn" disabled>
+                    <i class="fas fa-redo"></i> Sıfırla
+                </button>
+                <button class="btn btn-success" id="lapBtn" disabled>
+                    <i class="fas fa-flag"></i> Tur Al
+                </button>
+            </div>
+            
+            <div class="laps-container" id="lapsContainer">
+                <div class="laps-header">
+                    <span>Tur No</span>
+                    <span>Süre</span>
+                </div>
+                <div id="lapsList"></div>
+            </div>
+            
+            <button class="fullscreen-btn" id="fullscreenBtn">
+                <i class="fas fa-expand"></i>
+            </button>
+        </section>
+        
+        <section class="info-section">
+            <h2>Kronometre Hakkında</h2>
+            
+            <div class="info-card">
+                <h3>Kronometre Nedir?</h3>
+                <p>Kronometre, belirli bir zaman aralığını yüksek hassasiyetle ölçmek için kullanılan bir araçtır. Spor etkinliklerinden bilimsel deneylere kadar birçok alanda kullanılır.</p>
+                <p>Modern kronometreler milisaniye hassasiyetinde ölçüm yapabilir ve çeşitli ek özellikler sunar:</p>
+                <ul>
+                    <li>Tur kaydetme özelliği</li>
+                    <li>Farklı zaman aralıklarını karşılaştırma</li>
+                    <li>Verileri kaydetme ve analiz etme</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>Kullanım Alanları</h3>
+                <ul>
+                    <li><strong>Spor:</strong> Atletizm, yüzme, bisiklet gibi sporlarda performans ölçümü</li>
+                    <li><strong>Eğitim:</strong> Sınav sürelerinin yönetimi, deney sürelerinin ölçülmesi</li>
+                    <li><strong>Endüstri:</strong> Üretim süreçlerinin optimizasyonu</li>
+                    <li><strong>Bilim:</strong> Deneylerde kesin zaman ölçümleri</li>
+                    <li><strong>Günlük Yaşam:</strong> Egzersiz, pişirme süreleri, sunum provaları</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>Nasıl Kullanılır?</h3>
+                <ol>
+                    <li><strong>Başlat:</strong> Kronometreyi başlatmak için "Başlat" butonuna basın</li>
+                    <li><strong>Tur Al:</strong> Ara zamanları kaydetmek için "Tur Al" butonunu kullanın</li>
+                    <li><strong>Durdur:</strong> Ölçümü durdurmak için "Durdur" butonuna basın</li>
+                    <li><strong>Sıfırla:</strong> Yeni bir ölçüme başlamak için "Sıfırla" butonunu kullanın</li>
+                </ol>
+                <p>Tam ekran modu için sağ üst köşedeki genişletme butonunu kullanabilirsiniz.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Kronometre Fonksiyonları
+        let startTime;
+        let elapsedTime = 0;
+        let timerInterval;
+        let isRunning = false;
+        let lapCount = 0;
+        
+        const stopwatchDisplay = document.getElementById('stopwatch');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const lapBtn = document.getElementById('lapBtn');
+        const lapsList = document.getElementById('lapsList');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const stopwatchContainer = document.querySelector('.stopwatch-container');
+        const lapsContainer = document.getElementById('lapsContainer');
+        
+        function formatTime(time) {
+            const date = new Date(time);
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            const milliseconds = String(Math.floor(date.getUTCMilliseconds() / 100)).padStart(1, '0');
+            
+            return `${hours}:${minutes}:${seconds}.${milliseconds}`;
+        }
+        
+        function updateDisplay() {
+            stopwatchDisplay.textContent = formatTime(elapsedTime);
+        }
+        
+        function startTimer() {
+            if (!isRunning) {
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    updateDisplay();
+                }, 100);
+                
+                isRunning = true;
+                startBtn.disabled = true;
+                pauseBtn.disabled = false;
+                resetBtn.disabled = true;
+                lapBtn.disabled = false;
+                
+                startBtn.innerHTML = '<i class="fas fa-play"></i> Devam';
+            }
+        }
+        
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                resetBtn.disabled = false;
+            }
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            elapsedTime = 0;
+            updateDisplay();
+            isRunning = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            resetBtn.disabled = true;
+            lapBtn.disabled = true;
+            lapsList.innerHTML = '';
+            lapCount = 0;
+            
+            startBtn.innerHTML = '<i class="fas fa-play"></i> Başlat';
+        }
+        
+        function recordLap() {
+            if (isRunning) {
+                lapCount++;
+                const lapTime = elapsedTime;
+                const lapItem = document.createElement('div');
+                lapItem.className = 'lap-item';
+                lapItem.innerHTML = `
+                    <span class="lap-number">${lapCount}</span>
+                    <span>${formatTime(lapTime)}</span>
+                `;
+                lapsList.prepend(lapItem);
+                
+                // Otomatik scroll
+                lapsContainer.scrollTop = 0;
+            }
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                stopwatchContainer.requestFullscreen().catch(err => {
+                    alert(`Tam ekran hatası: ${err.message}`);
+                });
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        }
+        
+        // Event Listeners
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        lapBtn.addEventListener('click', recordLap);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        
+        // Klavye kısayolları
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            } else if (e.code === 'KeyL' && isRunning) {
+                recordLap();
+            } else if (e.code === 'KeyR' && !isRunning && elapsedTime > 0) {
+                resetTimer();
+            }
+        });
+    </script>
+</body>
+
+</html>

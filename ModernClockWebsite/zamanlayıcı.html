@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - Gelişmiş zamanlayıcı ile sürelerinizi kolayca yönetin">
+    <meta name="keywords" content="zamanlayıcı, timer, geri sayım, countdown">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Zamanlayıcı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .timer-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .timer-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Timer Display */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .timer-display {
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-theme .timer-display {
+            background-color: var(--dark-color);
+        }
+
+        .timer-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .timer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #timer {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .timer-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .start-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .start-btn:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Timer Settings */
+        .timer-settings {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .dark-theme .timer-settings {
+            background-color: var(--dark-color);
+        }
+
+        .timer-settings h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .time-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .time-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-input label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .time-input input {
+            width: 80px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .dark-theme .time-input input {
+            background-color: #2c3e50;
+            color: var(--text-light);
+            border-color: #555;
+        }
+
+        /* Info Section */
+        .info-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-section {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+        }
+
+        .info-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .info-section p, .info-section ul, .info-section ol {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .info-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .info-section strong {
+            color: var(--accent-color);
+        }
+
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .fullscreen-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timer-header h1 {
+                font-size: 2rem;
+            }
+            
+            #timer {
+                font-size: 3.5rem;
+            }
+            
+            .time-inputs {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .timer-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            #timer {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html" class="active">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html" class="active">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="timer-header">
+            <h1>Zamanlayıcı</h1>
+            <p>Sürelerinizi kolayca yönetmek için gelişmiş zamanlayıcı</p>
+        </section>
+        
+        <div class="timer-container">
+            <div class="timer-display">
+                <div class="timer-content">
+                    <div id="timer">00:00:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn start-btn" id="startBtn">Başlat</button>
+                        <button class="timer-btn reset-btn" id="resetBtn">Sıfırla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="timer-settings">
+            <h2>Zaman Ayarları</h2>
+            <div class="time-inputs">
+                <div class="time-input">
+                    <label for="hours">Saat</label>
+                    <input type="number" id="hours" min="0" max="23" value="0">
+                </div>
+                <div class="time-input">
+                    <label for="minutes">Dakika</label>
+                    <input type="number" id="minutes" min="0" max="59" value="0">
+                </div>
+                <div class="time-input">
+                    <label for="seconds">Saniye</label>
+                    <input type="number" id="seconds" min="0" max="59" value="0">
+                </div>
+            </div>
+        </div>
+        
+        <section class="info-section">
+            <h2>Zamanlayıcı Nedir?</h2>
+            <p>Zamanlayıcı, belirli bir süre boyunca bir işlemin gerçekleştirilmesi veya bir etkinliğin hatırlatılması için kullanılan bir araçtır. Genellikle elektronik cihazlarda, özellikle de saatler, telefonlar ve bilgisayarlarda bulunur. Zamanlayıcılar, belirli bir zaman aralığı için geri sayım yaparak kullanıcıya zamanın geçişini gösterir.</p>
+        </section>
+        
+        <section class="info-section">
+            <h2>Ne İşe Yarar?</h2>
+            <ol>
+                <li><strong>Görev Yönetimi:</strong> Zamanlayıcılar, belirli görevlerin zamanında yapılmasına yardımcı olur. Örneğin, çalışma sürelerini yönetmek veya dinlenme araları vermek için kullanılabilir.</li>
+                <li><strong>Hatırlatmalar:</strong> Önemli etkinlikler veya randevular için hatırlatıcılar olarak kullanılabilir. Kullanıcıya belirli bir zamanda bildirim göndererek unutma olasılığını azaltır.</li>
+                <li><strong>Mutfak Kullanımı:</strong> Yemek yaparken, pişirme sürelerini kontrol etmek için sıkça kullanılır. Bu sayede yemeklerin doğru süreyle pişirilmesi sağlanır.</li>
+                <li><strong>Egzersiz Programları:</strong> Spor yaparken, setler arasında dinlenme sürelerini takip etmek için zamanlayıcılar kullanılabilir.</li>
+            </ol>
+        </section>
+        
+        <section class="info-section">
+            <h2>Nerede Kullanılır?</h2>
+            <ul>
+                <li><strong>Evde:</strong> Yemek pişirirken, günlük aktivitelerde veya ev işlerinde.</li>
+                <li><strong>Ofiste:</strong> Toplantılarda veya projelerin zaman yönetiminde.</li>
+                <li><strong>Spor Salonları:</strong> Egzersiz sürelerini kontrol etmek için.</li>
+                <li><strong>Okullarda:</strong> Sınıf içi etkinliklerde ve sınav sürelerini takip etmek için.</li>
+            </ul>
+            <p>Zamanlayıcılar, günlük hayatı düzenlemeye yardımcı olan pratik ve işlevsel araçlardır. Bu sayede, zamanın daha verimli kullanılmasını sağlar ve etkinliklerin zamanında gerçekleştirilmesine katkıda bulunur.</p>
+        </section>
+        
+        <button class="fullscreen-btn" id="fullscreen-btn" title="Tam ekran">
+            <i class="fas fa-expand"></i>
+        </button>
+        
+        <audio id="alarm-sound" src="bedside-clock-alarm-95792.mp3"></audio>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Zamanlayıcı işlevselliği
+        let timerInterval;
+        let totalSeconds = 0;
+        let isRunning = false;
+        const alarmSound = document.getElementById('alarm-sound');
+        
+        const timerDisplay = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const hoursInput = document.getElementById('hours');
+        const minutesInput = document.getElementById('minutes');
+        const secondsInput = document.getElementById('seconds');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        
+        // Başlat/Duraklat butonu
+        startBtn.addEventListener('click', toggleTimer);
+        
+        // Sıfırla butonu
+        resetBtn.addEventListener('click', resetTimer);
+        
+        // Tam ekran butonu
+        fullscreenBtn.addEventListener('click', () => {
+            const timerDisplay = document.querySelector('.timer-display');
+            if (timerDisplay.requestFullscreen) {
+                timerDisplay.requestFullscreen();
+            } else if (timerDisplay.webkitRequestFullscreen) { // Safari
+                timerDisplay.webkitRequestFullscreen();
+            } else if (timerDisplay.msRequestFullscreen) { // IE11
+                timerDisplay.msRequestFullscreen();
+            }
+        });
+        
+        // Zamanlayıcıyı başlat/durdur
+        function toggleTimer() {
+            if (isRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+        
+        // Zamanlayıcıyı başlat
+        function startTimer() {
+            // Eğer zamanlayıcı çalışmıyorsa ve süre 0 değilse başlat
+            if (!isRunning && totalSeconds > 0) {
+                isRunning = true;
+                startBtn.textContent = 'Duraklat';
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+            // Eğer zamanlayıcı çalışmıyorsa ve süre 0 ise yeni süre ayarla
+            else if (!isRunning) {
+                const hours = parseInt(hoursInput.value) || 0;
+                const minutes = parseInt(minutesInput.value) || 0;
+                const seconds = parseInt(secondsInput.value) || 0;
+                
+                if (hours === 0 && minutes === 0 && seconds === 0) {
+                    alert('Lütfen geçerli bir süre girin!');
+                    return;
+                }
+                
+                totalSeconds = hours * 3600 + minutes * 60 + seconds;
+                updateDisplay();
+                
+                isRunning = true;
+                startBtn.textContent = 'Duraklat';
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+        }
+        
+        // Zamanlayıcıyı duraklat
+        function pauseTimer() {
+            isRunning = false;
+            startBtn.textContent = 'Devam Et';
+            clearInterval(timerInterval);
+        }
+        
+        // Zamanlayıcıyı sıfırla
+        function resetTimer() {
+            isRunning = false;
+            startBtn.textContent = 'Başlat';
+            clearInterval(timerInterval);
+            
+            // Alarm sesini durdur
+            alarmSound.pause();
+            alarmSound.currentTime = 0;
+            
+            // Giriş alanlarını sıfırla
+            hoursInput.value = '0';
+            minutesInput.value = '0';
+            secondsInput.value = '0';
+            
+            // Süreyi sıfırla
+            totalSeconds = 0;
+            updateDisplay();
+        }
+        
+        // Zamanlayıcıyı güncelle
+        function updateTimer() {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                updateDisplay();
+            } else {
+                // Süre doldu
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = 'Başlat';
+                
+                // Alarm çal
+                alarmSound.play();
+                
+                // Kullanıcıya bildirim göster
+                alert('Zaman doldu!');
+            }
+        }
+        
+        // Ekranı güncelle
+        function updateDisplay() {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            timerDisplay.textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+        
+        // Giriş alanlarını dinle
+        hoursInput.addEventListener('change', validateInputs);
+        minutesInput.addEventListener('change', validateInputs);
+        secondsInput.addEventListener('change', validateInputs);
+        
+        // Girişleri doğrula
+        function validateInputs() {
+            // Saat 0-23 arasında olmalı
+            if (parseInt(hoursInput.value) > 23) {
+                hoursInput.value = '23';
+            } else if (parseInt(hoursInput.value) < 0) {
+                hoursInput.value = '0';
+            }
+            
+            // Dakika ve saniye 0-59 arasında olmalı
+            if (parseInt(minutesInput.value) > 59) {
+                minutesInput.value = '59';
+            } else if (parseInt(minutesInput.value) < 0) {
+                minutesInput.value = '0';
+            }
+            
+            if (parseInt(secondsInput.value) > 59) {
+                secondsInput.value = '59';
+            } else if (parseInt(secondsInput.value) < 0) {
+                secondsInput.value = '0';
+            }
+            
+            // Boş değerleri 0 yap
+            if (isNaN(parseInt(hoursInput.value))) {
+                hoursInput.value = '0';
+            }
+            if (isNaN(parseInt(minutesInput.value))) {
+                minutesInput.value = '0';
+            }
+            if (isNaN(parseInt(secondsInput.value))) {
+                secondsInput.value = '0';
+            }
+        }
+    </script>
+</body>
+
+</html>

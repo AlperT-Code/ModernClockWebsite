@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlineZaman - Önemli tarihler için geri sayım sayacı. Bayramlar, kandiller, milli bayramlar ve özel günlere kalan süreyi takip edin.">
+    <meta name="keywords" content="geri sayım, önemli tarihler, bayramlar, kandiller, milli bayramlar">
+    <meta name="author" content="Alper">
+    <link rel="icon" type="image/png" href="b2e014c626167b8e45bb6f16b363a0bb.png">
+    <title>OnlineZaman - Önemli Tarih Sayaçı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2018400078654574" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --light-color: #16213e;
+            --dark-color: #0f3460;
+            --text-color: #e6e6e6;
+            --text-light: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Countdown Styles */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .countdown-card {
+            width: 160px;
+            height: 180px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
+        }
+
+        .countdown-value {
+            font-size: 4rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            position: absolute;
+            bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Date Selector */
+        .date-selector {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .date-select {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: 2px solid var(--primary-color);
+            background-color: white;
+            color: var(--text-color);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-theme .date-select {
+            background-color: var(--dark-color);
+            color: var(--text-light);
+            border-color: var(--accent-color);
+        }
+
+        .date-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.3);
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 3rem;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .dark-theme .info-card {
+            background-color: var(--dark-color);
+        }
+
+        .info-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card p {
+            margin-bottom: 1rem;
+        }
+
+        .info-card ul, .info-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .dark-theme .highlight-box {
+            background-color: rgba(15, 52, 96, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-card {
+                width: 120px;
+                height: 140px;
+            }
+            
+            .countdown-value {
+                font-size: 3rem;
+            }
+            
+            .countdown-label {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown-container {
+                gap: 1rem;
+            }
+            
+            .countdown-card {
+                width: 80px;
+                height: 100px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+                bottom: 0.5rem;
+            }
+            
+            .date-select {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Online<span>Zaman</span></a>
+            
+            <nav class="main-nav">
+                <a href="tarihsaat.html">Tarih-Saat</a>
+                <a href="zamanlayıcı.html">Zamanlayıcı</a>
+                <a href="kronometre.html">Kronometre</a>
+                <a href="önemlitarih.html" class="active">Önemli Tarihler</a>
+                <a href="tytsayac.html">TYT Sayacı</a>
+                <a href="ayt.html">AYT Sayacı</a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-nav" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="tarihsaat.html">Tarih-Saat</a>
+        <a href="zamanlayıcı.html">Zamanlayıcı</a>
+        <a href="kronometre.html">Kronometre</a>
+        <a href="önemlitarih.html" class="active">Önemli Tarihler</a>
+        <a href="tytsayac.html">TYT Sayacı</a>
+        <a href="ayt.html">AYT Sayacı</a>
+        <a href="msüsayaç.html">MSÜ Sayacı</a>
+        <a href="lgs.html">LGS Sayacı</a>
+        <a href="hesapmakinesi.html">Hesap Makinesi</a>
+    </nav>
+    
+    <main class="container">
+        <br>
+        <br>
+        <br>
+        <section class="page-header">
+            <h1>Önemli Tarih Sayaçı</h1>
+            <p>Bayramlar, kandiller ve milli bayramlara kalan süreyi takip edin</p>
+        </section>
+        
+        <div class="date-selector">
+            <select class="date-select" id="dateSelect">
+                <option value="">-- Tarih Seçin --</option>
+                <optgroup label="Dini Günler">
+                    <option value="2025-01-02T00:00:00">Regaib Kandili – 2 Ocak 2025</option>
+                    <option value="2025-01-26T00:00:00">Miraç Kandili – 26 Ocak 2025</option>
+                    <option value="2025-02-13T00:00:00">Berat Kandili – 13 Şubat 2025</option>
+                    <option value="2025-03-01T00:00:00">Ramazan Başlangıcı – 1 Mart 2025</option>
+                    <option value="2025-03-26T00:00:00">Kadir Gecesi – 26 Mart 2025</option>
+                    <option value="2025-03-30T00:00:00">Ramazan Bayramı 1. Günü – 30 Mart 2025</option>
+                    <option value="2025-06-06T00:00:00">Kurban Bayramı 1. Günü – 6 Haziran 2025</option>
+                    <option value="2025-06-26T00:00:00">Hicri Yılbaşı (1446) – 26 Haziran 2025</option>
+                    <option value="2025-07-05T00:00:00">Aşure Günü – 5 Temmuz 2025</option>
+                    <option value="2025-09-03T00:00:00">Mevlid Kandili – 3 Eylül 2025</option>
+                    <option value="2025-12-21T00:00:00">Üç Aylar Başlangıcı – 21 Aralık 2025</option>
+                    <option value="2025-12-25T00:00:00">Regaip Kandili – 25 Aralık 2025</option>
+                </optgroup>
+                <optgroup label="Milli Bayramlar">
+                    <option value="2025-01-01T00:00:00">Yılbaşı – 1 Ocak 2025</option>
+                    <option value="2025-04-23T00:00:00">Ulusal Egemenlik ve Çocuk Bayramı – 23 Nisan 2025</option>
+                    <option value="2025-05-01T00:00:00">Emek ve Dayanışma Günü – 1 Mayıs 2025</option>
+                    <option value="2025-05-19T00:00:00">Atatürk'ü Anma, Gençlik ve Spor Bayramı – 19 Mayıs 2025</option>
+                    <option value="2025-08-30T00:00:00">Zafer Bayramı – 30 Ağustos 2025</option>
+                    <option value="2025-10-29T00:00:00">Cumhuriyet Bayramı – 29 Ekim 2025</option>
+                </optgroup>
+            </select>
+        </div>
+        
+        <div class="countdown-container" id="countdownContainer">
+            <div class="countdown-card">
+                <div class="countdown-value" id="days">0</div>
+                <div class="countdown-label">Gün</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="hours">0</div>
+                <div class="countdown-label">Saat</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="minutes">0</div>
+                <div class="countdown-label">Dakika</div>
+            </div>
+            <div class="countdown-card">
+                <div class="countdown-value" id="seconds">0</div>
+                <div class="countdown-label">Saniye</div>
+            </div>
+        </div>
+        
+        <section class="info-section">
+            <h2>Önemli Tarih Sayaçı Hakkında</h2>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-question-circle"></i> Nedir?</h3>
+                <p>Önemli tarih sayaçları, belirli bir tarihe geri sayım yapan veya bir tarihin ne zaman olduğunu gösteren araçlardır. Bayramlar, kandiller, milli bayramlar gibi özel günlere kalan süreyi takip etmenizi sağlar.</p>
+                
+                <div class="highlight-box">
+                    <p><i class="fas fa-info-circle"></i> <strong>Önemli:</strong> Bu sayaç sayesinde önemli günleri kaçırmaz, hazırlıklarınızı zamanında yapabilirsiniz.</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-check-circle"></i> Faydaları</h3>
+                <ol>
+                    <li><strong>Hatırlatma:</strong> Önemli etkinliklerin yaklaşan tarihlerini hatırlatır.</li>
+                    <li><strong>Planlama:</strong> Etkinliklerin zamanlamasını organize etmeye yardımcı olur.</li>
+                    <li><strong>Motivasyon:</strong> Yaklaşan özel günler için heyecan oluşturur.</li>
+                    <li><strong>Kültürel Bilinç:</strong> Dini ve milli günler hakkında farkındalık sağlar.</li>
+                </ol>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-calendar-alt"></i> Kullanım Alanları</h3>
+                <ul>
+                    <li><strong>Kişisel Kullanım:</strong> Özel günleri takip etmek için</li>
+                    <li><strong>Eğitim:</strong> Öğrencilere milli ve dini günleri öğretmek için</li>
+                    <li><strong>Kurumsal:</strong> Şirketlerin bayram planlamaları yapması için</li>
+                    <li><strong>Sosyal Medya:</strong> Önemli günler hakkında bilgilendirme yapmak için</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="hakkımda.html">Hakkımda</a>
+                <a href="kullanımsartları.html">Kullanım Şartları</a>
+                <a href="Gizlilik Politikası.html">Gizlilik Politikası Politikası</a>
+                <a href="yorumveöneriler.html">Yorum ve Öneriler</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 OnlineZaman.com - Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Kullanıcının tercihini kontrol et
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Mobil navigasyon
+        const navToggle = document.getElementById('navToggle');
+        const closeNav = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+        
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+        
+        // Mobil navigasyonda bir linke tıklandığında menüyü kapat
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        
+        // Geri sayım fonksiyonları
+        const dateSelect = document.getElementById('dateSelect');
+        let countdownInterval;
+        
+        dateSelect.addEventListener('change', function() {
+            const selectedDate = this.value;
+            
+            // Önceki interval'i temizle
+            clearInterval(countdownInterval);
+            
+            if (selectedDate) {
+                countdownInterval = countdown(selectedDate);
+            } else {
+                resetCountdown();
+            }
+        });
+        
+        function countdown(targetDate) {
+            const targetTime = new Date(targetDate).getTime();
+            
+            // Hemen güncelle
+            updateCountdown();
+            
+            // Her saniye güncelle
+            return setInterval(updateCountdown, 1000);
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+                
+                if (distance < 0) {
+                    document.getElementById("countdownContainer").innerHTML = `
+                        <div style="text-align: center; width: 100%;">
+                            <h2 style="color: var(--accent-color);">Seçtiğiniz tarih geldi!</h2>
+                            <p>Hayırlı olsun!</p>
+                        </div>
+                    `;
+                    clearInterval(countdownInterval);
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                updateNumber("days", days);
+                updateNumber("hours", hours);
+                updateNumber("minutes", minutes);
+                updateNumber("seconds", seconds);
+            }
+        }
+        
+        function resetCountdown() {
+            updateNumber("days", 0);
+            updateNumber("hours", 0);
+            updateNumber("minutes", 0);
+            updateNumber("seconds", 0);
+        }
+        
+        function updateNumber(id, newValue) {
+            const element = document.getElementById(id);
+            const currentValue = parseInt(element.textContent);
+            
+            if (currentValue !== newValue) {
+                // Animasyon ekle
+                element.style.transform = "translateY(-10px)";
+                element.style.opacity = "0";
+                
+                setTimeout(() => {
+                    element.textContent = newValue;
+                    element.style.transform = "translateY(0)";
+                    element.style.opacity = "1";
+                }, 300);
+            }
+        }
+    </script>
+</body>
+
+</html>
